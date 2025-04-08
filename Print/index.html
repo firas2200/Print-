@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Stickers Generator</title>
+  <style>
+    /* Fade-in-up animation */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Body styling with a soft gradient background */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #d9a7c7, #fffcdc);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Container for all sections */
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fdfdfd;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Main title styling */
+    h1.main-title {
+      color: #07203a;
+      margin: 0 0 20px 0;
+      text-align: center;
+      text-decoration: underline;
+      font-weight: bold;
+      font-size: 2em;
+    }
+
+    /* Each section styled like a card */
+    .section {
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Section headings */
+    .section h2 {
+      margin: 0 0 15px 0;
+      color: #8d2323;
+      font-size: 1.2em;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      text-transform: uppercase; 
+      text-align: center;
+    }
+
+    /* Labels */
+    label {
+      display: block;
+      margin: 15px 0 5px 0;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    /* Inputs */
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      font-size: 1em;
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #0056b3;
+      box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+    }
+    /* Container to position the dropdown under the input */
+    #autocompleteContainer {
+      position: relative;
+      width: 300px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+    }
+
+    /* The input itself */
+    #titleInput {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      font-size: 16px;
+    }
+/*
+    /* Style the suggestions list *
+    #suggestionsList {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      top: 40px;
+      border: 1px solid #ccc;
+      max-height: 150px;
+      overflow-y: auto;
+      position: absolute;
+      width: calc(100% - 20px);
+      background-color: #fff;
+      z-index: 1000;
+    }
+    #stickersTitleSection {
+      position: relative;
+    }
+    #suggestionsList li {
+      padding: 8px;
+      cursor: pointer;
+    }
+    #suggestionsList li:hover {
+      background-color: #ff9770;
+      color: #fff;
+    }/*
+    /* Buttons */
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s, transform 0.3s;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #ff57e3;
+      transform: scale(1.05);
+    }
+    /* Input group styling for Part Section */
+    .input-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .input-group input[type="text"],
+    .input-group input[type="number"] {
+      width: 50%;
+    }
+    .section:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="main-title">Stickers Generator</h1>
+
+    <!-- Item Code Section -->
+    <div class="section" id="itemCodeSection">
+      <h2>Item Code</h2>
+      <label for="ItemCode">Start Number:</label>
+      <input type="number" id="ItemCode" placeholder="Enter start number">
+      <button id="generateItemBtn">Generate Sticker Item code</button>
+    </div>
+
+    <!-- Shelves Section -->
+    <div class="section" id="shelvesSection">
+      <h2>Shelves</h2>
+      <label for="startNumber">Start Number:</label>
+      <input type="number" id="startNumber" placeholder="e.g. 1" required />
+      
+      <label for="endNumber">End Number:</label>
+      <input type="number" id="endNumber" placeholder="e.g. 100" required />
+      
+      <label for="suffix">Suffix:</label>
+      <input type="text" id="suffix" placeholder="e.g. AB" required />
+      
+      <button onclick="generateStickers()">Generate Stickers</button>
+    </div>
+
+    <!-- Hangers Section -->
+    <div class="section" id="hangersSection">
+      <h2>Hangers</h2>
+      <label for="hangerChar">Start Character:</label>
+      <input type="text" id="hangerChar" placeholder="Enter start character">
+      
+      <label for="hangerCount">Hanger Count:</label>
+      <input type="number" id="hangerCount" placeholder="Enter hanger count">
+      
+      <label for="lastCount">Last Count:</label>
+      <input type="number" id="lastCount" placeholder="Enter last count">
+      
+      <button id="generateHangerBtn">Generate Hanger</button>
+    </div>
+
+    <!-- Container Section -->
+    <div class="section" id="containerSection">
+      <h2>Container (from A to Z)</h2>
+      <label for="containerPrefix">Prefix:</label>
+      <input type="text" id="containerPrefix" placeholder="Enter prefix">
+      
+      <label for="containerSuffix">Suffix:</label>
+      <input type="number" id="containerSuffix" placeholder="Enter suffix">
+      
+      <button id="generateContainerBtn">Generate Container</button>
+    </div>
+
+    <!-- Personaliser Section (Perso code/Times) -->
+    <div class="section" id="personaliserSection">
+      <h2>Personaliser A4 forme</h2>
+      <div id="personaliserInputContainer">
+        <div class="input-group">
+          <input type="text" class="personaliserCodeInput" placeholder="Enter code" required>
+          <input type="number" class="personaliserTimesInput" placeholder="Times" required min="1">
+          <button type="button" class="removeBtn" onclick="removePersonaliserGroup(this)">Remove</button>
+        </div>
+      </div>
+      <button id="addPersonaliserInputBtn" type="button">+ Add Another</button>
+      <button id="generatePersonaliserBtn" type="button">Generate Personaliser</button>
+    </div>
+
+    <!-- Arrows Section -->
+    <div class="section" id="arrowsSection">
+      <h2>Arrows</h2>
+      <button id="generateDownArrowBtn">Down Arrow</button>
+      <button id="generateSideArrowBtn">Side Arrow</button>
+    </div>
+
+    <!-- Part (Multiple Codes) Section -->
+    <div class="section" id="partSection">
+      <h2>Part (Multiple Codes only one row)</h2>
+      <div id="inputContainer">
+        <div class="input-group">
+          <input type="text" class="codeInput" placeholder="Enter code" required>
+          <input type="number" class="timesInput" placeholder="Times" min="1" required>
+          <button type="button" class="removeBtn" onclick="removeGroup(this)">Remove</button>
+        </div>
+      </div>
+      <button id="addInputBtn">+ Add Another</button>
+      <br>
+      <button id="generatePartBtn">Generate Part</button>
+    </div>
+
+    <!-- Stickers by Part ID Section -->
+    <div class="section" id="stickersPartIdSection">
+      <h2>Stickers Part ID (Enter Part ID)</h2>
+      <input type="text" id="partIdInput" placeholder="Enter Part ID">
+      
+      <button type="button" onclick="printSticker()">Print Sticker</button>
+    </div>
+
+    <!--- Stickers by Title  
+    <h2>  Stickers Title (Enter Title )</h2>
+    <input  type="text"  id="stickerTitle"  placeholder="Enter title">
+    <button onclick="createSticker()">Generate Sticker</button>
+
+  -->
+
+  <script>
+     //================== Print Sticker  by Title  ==================
+
+     function createSticker() {
+      const title = document.getElementById('stickerTitle').value.trim();
+      if (!title) {
+        alert("Please enter a title for the sticker.");
+        return;
+      }
+      // Build the URL for your endpoint, encoding the title
+      const url = `http://localhost:8080/api/partiddata/sticker/bytitle?title=${encodeURIComponent(title)}`;
+      // Open the PDF in a new tab
+      window.open(url, '_blank');
+    }
+
+
+
+    //================== Print Sticker by Part ID ==================
+    function printSticker() {
+      const partId = document.getElementById("partIdInput").value.trim();
+      if (!partId) {
+        alert("Please enter a Part ID!");
+        return;
+      }
+      // Call the unified endpoint with ?id=...
+      window.open(`http://localhost:8080/api/partiddata/sticker?id=${encodeURIComponent(partId)}`, "_blank");
+    }
+
+    //================== Autocomplete for Title ==================
+   /* document.getElementById('titleInput').addEventListener('input', function() {
+      const query = this.value.trim();
+      const suggestionsList = document.getElementById('suggestionsList');
+      suggestionsList.innerHTML = '';
+      if (query.length >= 1) {
+        fetch(`http://localhost:8080/api/partiddata/search/title?query=${encodeURIComponent(query)}`)
+          .then(response => response.json())
+          .then(data => {
+            data.forEach(part => {
+              const li = document.createElement('li');
+              li.textContent = part.title;
+              li.addEventListener('click', function() {
+                document.getElementById('titleInput').value = part.title;
+                suggestionsList.innerHTML = '';
+              });
+              suggestionsList.appendChild(li);
+            });
+          })
+          .catch(error => console.error('Fetch error:', error));
+      }
+    });*/
+
+    //================== Print Sticker by Title ==================
+   /* function printStickerByTitle() {
+      const title = document.getElementById('titleInput').value.trim();
+      if (!title) {
+        alert("Please enter a Title!");
+        return;
+      }
+      // Call the unified endpoint with ?title=...
+      window.open(`http://localhost:8080/api/partiddata/sticker?title=${encodeURIComponent(title)}`, "_blank");
+    }*/
+
+    //================== Shelves function ==================
+    function generateStickers() {
+      const startNumber = document.getElementById("startNumber").value;
+      const endNumber   = document.getElementById("endNumber").value;
+      const suffix      = document.getElementById("suffix").value; 
+      const startNum = parseInt(startNumber, 10);
+      const endNum   = parseInt(endNumber, 10);   
+      if (isNaN(startNum) || isNaN(endNum)) {
+        alert("Please enter valid numbers.");
+        return;
+      }
+      if (startNum > endNum) {
+        alert("Start Number must be less than or equal to End Number.");
+        return;
+      }
+      const url = `http://localhost:8080/Shelves/${startNum}/${endNum}/${suffix}`;
+      window.open(url, "_blank");
+    }
+
+    //================== Item Code function ==================
+    function generateSticker() {
+      const inputValue = document.getElementById("ItemCode").value.trim();
+      if (inputValue === "") {
+        alert("Please enter a valid number.");
+        return;
+      }
+      const input = Number(inputValue);
+      if (isNaN(input) || input <= 0) {
+        alert("Please enter a valid number greater than 0.");
+        return;
+      }
+      const url = `http://localhost:8080/Item/barcode/${input}`;
+      window.open(url, "_blank");
+    }
+
+    //================== Single Personaliser function ==================
+    function removePersonaliserGroup(button) {
+      const container = document.getElementById("personaliserInputContainer");
+      container.removeChild(button.parentNode);
+    }
+
+    document.getElementById("addPersonaliserInputBtn").addEventListener("click", function() {
+      const container = document.getElementById("personaliserInputContainer");
+      const newGroup = document.createElement("div");
+      newGroup.className = "input-group";
+      newGroup.innerHTML = `
+        <input type="text" class="personaliserCodeInput" placeholder="Enter code" required>
+        <input type="number" class="personaliserTimesInput" placeholder="Times" required min="1">
+        <button type="button" class="removeBtn" onclick="removePersonaliserGroup(this)">Remove</button>
+      `;
+      container.appendChild(newGroup);
+    });
+
+    document.getElementById("generatePersonaliserBtn").addEventListener("click", function() {
+      const codeInputs = document.querySelectorAll(".personaliserCodeInput");
+      const timesInputs = document.querySelectorAll(".personaliserTimesInput");
+
+      let queryParams = [];
+      for (let i = 0; i < codeInputs.length; i++) {
+        const codeVal = codeInputs[i].value.trim();
+        const timesVal = timesInputs[i].value.trim();
+        if (!codeVal || isNaN(parseInt(timesVal)) || parseInt(timesVal) <= 0) {
+          alert("Please enter a valid code and times > 0 for each entry.");
+          return;
+        }
+        queryParams.push("code=" + encodeURIComponent(codeVal));
+        queryParams.push("times=" + encodeURIComponent(timesVal));
+      }
+      const queryString = queryParams.join("&");
+      const url = `http://localhost:8080/PersonaliserA4/print?${queryString}`;
+      window.open(url, "_blank");
+    });
+
+    //================== Hangers function ==================
+    function generateHanger() {
+      const charValue = document.getElementById("hangerChar").value.trim();
+      const countValue = document.getElementById("hangerCount").value.trim();
+      const last = document.getElementById("lastCount").value.trim();
+      if (charValue === "" || countValue === "" || last === "") {
+        alert("Please fill in the start character, hanger count, and last count.");
+        return;
+      }
+      if (charValue.length !== 1 || !/^[A-Za-z]$/.test(charValue)) {
+        alert("Please enter a single letter for the start character.");
+        return;
+      }
+      const hangerCount = Number(countValue);
+      if (isNaN(hangerCount) || hangerCount <= 0) {
+        alert("Please enter a valid hanger count greater than 0.");
+        return;
+      }
+      const hangerCount1 = Number(last);
+      if (isNaN(hangerCount1) || hangerCount1 <= 0) {
+        alert("Please enter a valid last count greater than 0.");
+        return;
+      }
+      const url = `http://localhost:8080/Hangers/${charValue.toUpperCase()}/${hangerCount}/${hangerCount1}`;
+      window.open(url, "_blank");
+    }
+
+    //================== Container function ==================
+    function generateContainerStickers() {
+      const prefix = document.getElementById("containerPrefix").value.trim();
+      const suffix = document.getElementById("containerSuffix").value.trim();
+      if (prefix === "" || suffix === "") {
+        alert("Please enter both prefix and suffix.");
+        return;
+      }
+      const url = `http://localhost:8080/container/${prefix}/${suffix}`;
+      window.open(url, "_blank");
+    }
+
+    //================== Arrows function ==================
+    function generateDownArrow() {
+      const url = 'http://localhost:8080/arrows/down';
+      window.open(url, "_blank");
+    }
+    function generateSideArrow() {
+      const url = 'http://localhost:8080/arrows/side';
+      window.open(url, "_blank");
+    }
+
+    //================== Remove a group ==================
+    function removeGroup(button) {
+      const container = document.getElementById('inputContainer');
+      container.removeChild(button.parentNode);
+    }
+
+    //================== Add a new input group ==================
+    document.getElementById('addInputBtn').addEventListener('click', function() {
+      const container = document.getElementById('inputContainer');
+      const newGroup = document.createElement('div');
+      newGroup.className = 'input-group';
+
+      const codeInput = document.createElement('input');
+      codeInput.type = 'text';
+      codeInput.className = 'codeInput';
+      codeInput.placeholder = 'Enter code';
+      codeInput.required = true;
+
+      const timesInput = document.createElement('input');
+      timesInput.type = 'number';
+      timesInput.className = 'timesInput';
+      timesInput.placeholder = 'Times';
+      timesInput.min = '1';
+      timesInput.required = true;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'removeBtn';
+      removeBtn.textContent = 'Remove';
+      removeBtn.addEventListener('click', function() {
+        container.removeChild(newGroup);
+      });
+
+      newGroup.appendChild(codeInput);
+      newGroup.appendChild(timesInput);
+      newGroup.appendChild(removeBtn);
+      container.appendChild(newGroup);
+    });
+
+    //================== Generate button for multiple codes ==================
+    document.getElementById('generatePartBtn').addEventListener('click', function() {
+      const codeInputs = document.querySelectorAll('.codeInput');
+      const timesInputs = document.querySelectorAll('.timesInput');
+      let queryParams = [];
+      for (let i = 0; i < codeInputs.length; i++) {
+        const codeVal = codeInputs[i].value.trim();
+        const timesVal = timesInputs[i].value.trim();
+        if (!codeVal || !timesVal) {
+          alert("Please fill in both code and times for each entry.");
+          return;
+        }
+        queryParams.push('code=' + encodeURIComponent(codeVal));
+        queryParams.push('times=' + encodeURIComponent(timesVal));
+      }
+      const queryString = queryParams.join('&');
+      const url = 'http://localhost:8080/Personaliser/print?' + queryString;
+      window.open(url, '_blank');
+    });
+
+    //================== Attach event listeners for the rest ==================
+    document.getElementById("generateItemBtn")
+      .addEventListener("click", generateSticker);
+    document.getElementById("generateHangerBtn")
+      .addEventListener("click", generateHanger);
+    document.getElementById("generateDownArrowBtn")
+      .addEventListener("click", generateDownArrow);
+    document.getElementById("generateSideArrowBtn")
+      .addEventListener("click", generateSideArrow);
+    document.getElementById("generateContainerBtn")
+      .addEventListener("click", generateContainerStickers);
+  </script>
+</body>
+</html>
